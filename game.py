@@ -1,3 +1,4 @@
+import random
 import sys
 import hmac
 import hashlib
@@ -130,8 +131,11 @@ class Game:
         return "computer" if computer_number != user_guess else "user"
 
     def computer_select_dice(self, is_first: bool) -> Tuple[Dice, int]:
-        computer_choice = self.remaining_dice.pop(0)  # Automatically select the first available die
+        # Select a random dice index from the remaining dice
+        computer_choice = random.choice(self.remaining_dice)
+        self.remaining_dice.remove(computer_choice)  # Remove the selected dice from remaining
         computer_dice = self.dice[computer_choice]
+
         if not is_first:
             print(f"I choose the [{','.join(map(str, computer_dice.values))}] dice.")
         return computer_dice, computer_choice
